@@ -3,11 +3,30 @@ import org.jetbrains.kotlin.konan.target.HostManager
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("com.vanniktech.maven.publish")
+    id("maven-publish")
     id("binary-compatibility-validator")
     id("com.diffplug.spotless")
     id("org.jetbrains.dokka")
     id("build-support")
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/getstep/openai-kotlin")
+        credentials(PasswordCredentials::class)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/getstep/openai-kotlin")
+            credentials(PasswordCredentials::class)
+        }
+    }
 }
 
 kotlin {
@@ -30,7 +49,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                api(projects.openaiCore)
+                api("com.step.openai:openai-core-jvm:4.0.0")
                 api(libs.coroutines.core)
                 api(libs.kotlinx.io.core)
                 implementation(libs.kotlinx.io.bytestring)

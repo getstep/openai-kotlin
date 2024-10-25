@@ -17,6 +17,9 @@ plugins {
 }
 
 subprojects {
+    version = "4.0.0"
+    group = "com.step.openai"
+
     apply(plugin = "com.diffplug.spotless")
     configure<SpotlessExtension> {
         kotlin {

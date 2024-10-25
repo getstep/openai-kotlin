@@ -1,11 +1,21 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("com.vanniktech.maven.publish")
+    id("maven-publish")
     id("binary-compatibility-validator")
     id("com.diffplug.spotless")
     id("org.jetbrains.dokka")
     id("build-support")
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/getstep/openai-kotlin")
+            credentials(PasswordCredentials::class)
+        }
+    }
 }
 
 kotlin {
